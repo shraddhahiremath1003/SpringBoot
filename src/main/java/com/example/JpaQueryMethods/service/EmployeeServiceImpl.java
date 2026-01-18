@@ -4,6 +4,7 @@ import com.example.JpaQueryMethods.dao.EmployeeRepository;
 import com.example.JpaQueryMethods.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -23,6 +24,7 @@ public class EmployeeServiceImpl implements EmployeeService{
         return employeeRepository.save(employee);
     }
 
+    @Transactional
     @Override
     public Employee updateEmp(Integer id,Employee employee) {
         Employee Curremp=employeeRepository.findById(id).orElseThrow(()->
@@ -33,8 +35,10 @@ public class EmployeeServiceImpl implements EmployeeService{
         if(Objects.nonNull(employee.getCity()))Curremp.setCity(employee.getCity());
         if(Objects.nonNull(employee.getDob()))Curremp.setDob(employee.getDob());
         if(Objects.nonNull(employee.getSalary()))Curremp.setSalary(employee.getSalary());
-        return employeeRepository.save(Curremp);
+//        return employeeRepository.save(Curremp);//Dirty checking
+        return Curremp;
     }
+
 
     @Override
     public Employee getEmp(Integer id) {
@@ -47,11 +51,12 @@ public class EmployeeServiceImpl implements EmployeeService{
         return employeeRepository.findAll();
     }
 
+    @Transactional
     @Override
-    public Employee deleteEmp(Integer id) {
-        Employee emp=employeeRepository.findById(id).orElseThrow(()->new RuntimeException("Employee Not Found "+id));
+    public void deleteEmp(Integer id) {
+        employeeRepository.findById(id).orElseThrow(()->new RuntimeException("Employee Not Found "+id));
 
         employeeRepository.deleteById(id);
-        return emp;
+
     }
 }
