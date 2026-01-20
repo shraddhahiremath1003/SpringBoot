@@ -38,7 +38,8 @@ public class Patient {
     @Enumerated(EnumType.STRING)
     private BloodGroupType bloodGroup;
 
-    @OneToOne
+//    @OneToOne(cascade=CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "patient_insurance_id")//Owning Side having foreign key column
     private Insurance insurance;
 

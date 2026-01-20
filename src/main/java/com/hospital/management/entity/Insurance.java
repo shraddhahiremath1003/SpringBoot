@@ -24,7 +24,7 @@ public class Insurance {
     @Column(nullable = false, length = 100)
     private String provider;
 
-    @Column(nullable = false)
+
     private LocalDate validUntil;
 
     @CreationTimestamp
